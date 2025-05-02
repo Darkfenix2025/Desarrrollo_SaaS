@@ -24,7 +24,7 @@ try:
         "response_mime_type": "text/plain",
     }
     model = genai.GenerativeModel(
-        model_name="gemini-1.5-pro-latest", # Usar el modelo más reciente si está disponible
+        model_name="gemini-2.5-pro-preview-03-25", # Usar el modelo más reciente si está disponible
         generation_config=generation_config,
     )
 except KeyError:
