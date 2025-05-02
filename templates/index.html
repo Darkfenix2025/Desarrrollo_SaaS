@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reformulador de Hechos - Legalito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Podrías añadir Bootstrap u otro framework CSS para mejor estilo -->
+</head>
+<body>
+    <div class="container">
+        <h1>Reformulador de Hechos Jurídicos</h1>
+        <p>by Legal-IT-0</p>
+        
+        <div class="input-section">
+            <label for="inputText">Ingrese los hechos en crudo:</label>
+            <textarea id="inputText" rows="10" placeholder="Escriba o pegue los hechos aquí..."></textarea>
+            <button id="processButton">Procesar Hechos</button>
+        </div>
+
+        <div class="output-section">
+            <label for="outputText">Resultado:</label>
+            <textarea id="outputText" rows="15" readonly placeholder="Aquí aparecerá el texto reformulado..."></textarea>
+            <button id="downloadButton" disabled>Descargar como Word (.docx)</button>
+        </div>
+        
+        <div id="loadingIndicator" style="display: none;">Procesando...</div>
+        <div id="errorIndicator" style="color: red; display: none;"></div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
