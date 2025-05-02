@@ -39,23 +39,29 @@ except Exception as e:
 def procesar_texto_ia(input_text):
     if not model:
         return "Error: El modelo de IA no está configurado correctamente."
+    
+    # Cargar la plantilla del prompt desde la variable de entorno
+    prompt_template = os.environ.get("REFORMULADOR_PROMPT")
+
+    if not prompt_template:
+        print("ERROR: Variable de entorno REFORMULADOR_PROMPT no encontrada.")
+        return "Error de configuración: Falta la plantilla del prompt."
+    
     try:
         # Tu prompt exacto aquí
-        prompt = f"""
-            Eres un abogado profesional especializado en el sistema legal argentino. Tu principal tarea es reformular, corregir y estructurar los hechos proporcionados para que puedan ser utilizados como base en un escrito de demanda judicial. 
-            Tu enfoque debe ser identificar los puntos clave de los hechos, especialmente aquellos que tienen relevancia jurídica, y justificar las consecuencias jurídicas en base al derecho aplicable.
-            Utiliza un lenguaje claro, preciso y formal, adaptado al contexto judicial. Menciona normativa aplicable sólo si es estrictamente necesario y relevante para la estructuración de los hechos. No inventes información que no esté en los hechos proporcionados.
-            Hechos en crudo: 
-            \"\"\"
-            {input_text}
-            \"\"\"
-            Reformulación estructurada para demanda:
-            """
+        # Formatear el prompt final inyectando el input_text
+        # Usaremos .format() aquí porque el prompt ya tiene llaves {}
+        final_prompt = prompt_template.format(input_text=input_text) 
         
-        response = model.generate_content(prompt)
+        response = model.generate_content(final_prompt)
         # Pequeña validación/limpieza básica (opcional)
         processed_text = response.text.strip()
         return processed_text
+    
+    except KeyError as e:
+        print(f"Error formateando el prompt: Falta la clave {e}")
+        return f"Error de configuración: Problema al formatear el prompt ({e})."
+    
     except Exception as e:
         # Loguear el error real para ti sería bueno aquí
         print(f"Error en API Gemini: {e}") 
@@ -84,7 +90,7 @@ def handle_process():
     
     # Verificar si hubo un error durante el procesamiento
     if "Error:" in processed_text:
-         return jsonify({"error": processed_text}), 500 # Internal Server Error
+        return jsonify({"error": processed_text}), 500 # Internal Server Error
 
     return jsonify({"result": processed_text})
 
@@ -92,8 +98,8 @@ def handle_process():
 def download_docx():
     """ Recibe texto vía POST y devuelve un archivo .docx para descargar """
     if not request.is_json:
-         return jsonify({"error": "Request must be JSON"}), 400
-         
+        return jsonify({"error": "Request must be JSON"}), 400
+        
     data = request.get_json()
     text_to_save = data.get('text', '')
 
