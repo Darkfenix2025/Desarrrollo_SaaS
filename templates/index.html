@@ -22,6 +22,12 @@
                 <input type="password" id="loginPassword" placeholder="Contraseña" required>
                 <button id="loginButton">Entrar</button>
                 <div id="loginError" class="errorMessage"></div> 
+                <hr> <!-- Separador opcional -->
+                <button id="googleSignInButton" class="google-button">
+                    <img src="{{ url_for('static', filename='img/google-logo.png') }}" alt="Google logo" /> <!-- Necesitarás un logo de Google -->
+                    Continúa con Google
+                </button>
+                <hr>
                 <p>¿No tienes cuenta? <a href="#" id="showSignup">Regístrate aquí</a></p>
             </div>
 

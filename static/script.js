@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingIndicator = document.getElementById('loadingIndicator');
     const errorIndicator = document.getElementById('errorIndicator'); // Usaremos este también para errores de la app
     const outputSection = document.querySelector('.output-section');
+    const googleSignInButton = document.getElementById('googleSignInButton');
 
     // ==== MANEJO DE ESTADO DE AUTENTICACIÓN (onAuthStateChanged) ====
     // Esta función se ejecuta automáticamente cuando el usuario inicia sesión,
@@ -108,6 +109,44 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error en login:", error.code, error.message);
             loginErrorDiv.textContent = getAuthErrorMessage(error); // Mostrar error amigable
+        }
+    });
+
+    // --- Iniciar Sesión con Google ---
+    googleSignInButton.addEventListener('click', async () => {
+        // 1. Crear una instancia del proveedor de Google
+        const provider = new firebase.auth.GoogleAuthProvider();
+        // Opcional: Puedes añadir scopes si necesitas permisos adicionales
+        // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+        loginErrorDiv.textContent = ''; // Limpiar errores previos del formulario de email/pass
+
+        try {
+            console.log("Intentando iniciar sesión con Google...");
+            // 2. Iniciar sesión usando una ventana emergente (popup)
+            await auth.signInWithPopup(provider);
+            console.log("Inicio de sesión con Google exitoso");
+            // onAuthStateChanged se encargará de actualizar la UI
+        } catch (error) {
+            console.error("Error en Google Sign-In:", error.code, error.message);
+            // Manejar errores específicos de Google o de cuenta existente
+            if (error.code === 'auth/popup-closed-by-user') {
+                loginErrorDiv.textContent = 'Has cerrado la ventana de inicio de sesión de Google.';
+            } else if (error.code === 'auth/cancelled-popup-request') {
+                    loginErrorDiv.textContent = 'Se canceló la solicitud de inicio de sesión.';
+            } else if (error.code === 'auth/popup-blocked') {
+                    loginErrorDiv.textContent = 'El navegador bloqueó la ventana emergente. Habilítalas para este sitio.';
+            } else if (error.code === 'auth/account-exists-with-different-credential') {
+                 // Este error es común si el usuario ya se registró con email/pass
+                 // usando el mismo correo que la cuenta de Google.
+                 // Aquí podrías intentar vincular las cuentas (más avanzado)
+                 // o simplemente mostrar un mensaje más claro.
+                loginErrorDiv.textContent = `Ya existe una cuenta con este correo (${error.email}). Intenta iniciar sesión con tu método original o contacta soporte.`;
+                 // Podrías intentar obtener las credenciales pendientes y sugerir vincular
+                 // const pendingCred = error.credential; 
+            } else {
+                 loginErrorDiv.textContent = getAuthErrorMessage(error); // Usar el traductor general
+            }
         }
     });
 

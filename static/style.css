@@ -184,3 +184,40 @@ button:disabled {
 #errorIndicator {
      /* ... */
 }
+
+.google-button {
+    background-color: #4285F4; /* Azul de Google */
+    color: white;
+    display: flex; /* Para alinear imagen y texto */
+    align-items: center;
+    justify-content: center; /* Centrar contenido */
+    padding: 8px 15px; /* Ajustar padding */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95em; /* Ajustar tamaño de fuente */
+    margin-top: 10px; /* Espacio arriba */
+    width: 85%; /* Ancho similar a los inputs */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.google-button:hover {
+    background-color: #357ae8; /* Azul más oscuro al pasar el ratón */
+}
+
+.google-button img {
+    width: 18px; /* Tamaño del logo */
+    height: 18px;
+    margin-right: 10px; /* Espacio entre logo y texto */
+    background-color: white; /* Fondo blanco para el logo si es necesario */
+    border-radius: 2px; /* Bordes redondeados para el fondo del logo */
+    padding: 2px; /* Pequeño padding alrededor del logo */
+}
+
+hr { /* Estilo opcional para los separadores */
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+    width: 90%;
+}
