@@ -94,3 +94,93 @@ button:disabled {
     display: none; /* Ocultar por defecto */
     margin-bottom: 20px; /* Mantenemos el margen inferior */
 }
+
+/* ... (tus estilos anteriores, incluyendo el body con fondo y el .container) ... */
+
+/* --- Estilos de Autenticación --- */
+#authContainer h1, #authContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#loginForm, #signupForm {
+    display: flex;
+    flex-direction: column; /* Elementos uno debajo del otro */
+    align-items: center; /* Centrar elementos horizontalmente */
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9; /* Fondo ligeramente diferente */
+}
+
+#authContainer input[type="email"], 
+#authContainer input[type="password"] {
+    width: 80%; /* Ancho del input */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#authContainer button {
+    padding: 10px 25px; /* Botones un poco más grandes */
+    margin-top: 10px;
+}
+
+#authContainer p {
+     margin-top: 15px;
+     font-size: 0.9em;
+}
+#authContainer a {
+     color: #007bff;
+     text-decoration: none;
+     cursor: pointer;
+}
+ #authContainer a:hover {
+      text-decoration: underline;
+ }
+
+
+/* --- Contenedor de la App (se controla display con JS) --- */
+/* #appContainer {
+     display: none; /* Asegúrate que esté oculto por defecto si no lo hiciste inline */
+/*} */
+
+.userInfo {
+    text-align: right; /* Pone el email y logout a la derecha */
+    margin-bottom: 15px;
+    padding: 5px;
+    background-color: #e9ecef; /* Fondo suave */
+    border-radius: 4px;
+}
+.userInfo span {
+    margin-right: 15px;
+    font-weight: bold;
+}
+#logoutButton {
+    padding: 5px 10px; /* Botón pequeño */
+    background-color: #dc3545; /* Rojo */
+    font-size: 0.9em;
+}
+ #logoutButton:hover {
+      background-color: #c82333;
+ }
+
+
+/* --- Mensajes de Error --- */
+.errorMessage {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+    min-height: 1.2em; /* Para que ocupe espacio aunque esté vacío */
+    text-align: center;
+}
+
+/* --- Indicadores (ya los tenías, puedes ajustar) --- */
+#loadingIndicator {
+    /* ... */
+}
+#errorIndicator {
+     /* ... */
+}

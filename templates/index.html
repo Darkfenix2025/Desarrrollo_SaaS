@@ -5,30 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reformulador de Hechos - Legalito</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Podrías añadir Bootstrap u otro framework CSS para mejor estilo -->
 </head>
 <body>
+    <!-- Contenedor Principal -->
     <div class="container">
-        <h1>Reformulador de Hechos Jurídicos</h1>
-        <p>by Legal-IT-0</p>
-        
-        <div class="input-section">
-            <label for="inputText">Ingrese los hechos en crudo:</label>
-            <textarea id="inputText" rows="10" placeholder="Escriba o pegue los hechos aquí..."></textarea>
-            <button id="processButton">Procesar Hechos</button>
+
+        <!-- ==== SECCIÓN DE AUTENTICACIÓN (Inicialmente Visible) ==== -->
+        <div id="authContainer">
+            <h1>Legalito Reformulador</h1>
+            <p>Inicia sesión o crea una cuenta para continuar</p>
+
+            <!-- --- Formulario de Login --- -->
+            <div id="loginForm">
+                <h2>Iniciar Sesión</h2>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button id="loginButton">Entrar</button>
+                <div id="loginError" class="errorMessage"></div> 
+                <p>¿No tienes cuenta? <a href="#" id="showSignup">Regístrate aquí</a></p>
+            </div>
+
+            <!-- --- Formulario de Signup --- -->
+            <div id="signupForm" style="display: none;"> <!-- Oculto por defecto -->
+                <h2>Crear Cuenta</h2>
+                <input type="email" id="signupEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="signupPassword" placeholder="Contraseña (mín. 6 caracteres)" required>
+                <button id="signupButton">Registrarse</button>
+                <div id="signupError" class="errorMessage"></div>
+                 <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+            </div>
         </div>
 
-        <div class="output-section">
-            <label for="outputText">Resultado:</label>
-            <textarea id="outputText" rows="15" readonly placeholder="Aquí aparecerá el texto reformulado..."></textarea>
-            <button id="downloadButton" disabled>Descargar como Word (.docx)</button>
-        </div>
-        
-        <div id="loadingIndicator" style="display: none;">Procesando...</div>
-        <div id="errorIndicator" style="color: red; display: none;"></div>
+         <!-- ==== SECCIÓN PRINCIPAL DE LA APP (Inicialmente Oculta) ==== -->
+        <div id="appContainer" style="display: none;"> 
+            <div class="userInfo">
+                <span id="userEmailDisplay"></span> 
+                <button id="logoutButton">Cerrar Sesión</button>
+            </div>
 
-    </div>
+            <h1>Reformulador de Hechos Jurídicos</h1>
+            <p>by Legal-IT-0</p>
+            
+            <div class="input-section">
+                <label for="inputText">Ingrese los hechos en crudo:</label>
+                <textarea id="inputText" rows="10" placeholder="Escriba o pegue los hechos aquí..."></textarea>
+                <button id="processButton">Procesar Hechos</button>
+            </div>
 
+            <div class="output-section"> <!-- Se oculta/muestra con CSS/JS -->
+                <label for="outputText">Resultado:</label>
+                <textarea id="outputText" rows="15" readonly placeholder="Aquí aparecerá el texto reformulado..."></textarea>
+                <button id="downloadButton" disabled>Descargar como Word (.docx)</button>
+            </div>
+            
+            <div id="loadingIndicator" style="display: none;">Procesando...</div>
+            <div id="errorIndicator" class="errorMessage" style="color: red;"></div> 
+        </div> <!-- Fin appContainer -->
+
+    </div> <!-- Fin container -->
+
+    <!-- ==== SDK DE FIREBASE ==== -->
+    <!-- Cambia las versiones si Firebase las actualiza -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+
+    <!-- ==== TU SCRIPT PERSONALIZADO ==== -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>
